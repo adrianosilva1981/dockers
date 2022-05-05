@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  mongodb_server:
+    image: mongo:4.4
+    command: mongod --serviceExecutor adaptive
+    ports:
+      - 27017:27017
+    expose:
+      - '27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+    volumes:
+      - mongodb_server_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+volumes:
+  mongodb_server_data:
